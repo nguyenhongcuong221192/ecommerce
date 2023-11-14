@@ -3,9 +3,10 @@ import styled from "styled-components"
 import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-import stylesNav from "./Navbar.scss";
+import styles from "./Navbar.scss";
 import logo from "../../assets/logo.svg";
 import { links } from "../../utils/constants";
+import CartButton from "../cart-button";
 
 const Navbar = () => {
     return (
@@ -29,6 +30,7 @@ const Navbar = () => {
                         </li>
                     })}
                 </ul>
+                <CartButton />
             </div>
         </NavContainer>
     )
@@ -41,6 +43,6 @@ const NavContainer = styled.nav`
     display: flex;
     align-items: center;
     justify-content: center;
-    ${stylesNav}
+    ${styles}
 }
 `;
