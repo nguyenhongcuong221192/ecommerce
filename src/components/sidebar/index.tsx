@@ -3,11 +3,13 @@ import styled from "styled-components";
 import logo from "../../assets/logo.svg";
 import { links } from "../../utils/constants";
 import { Link } from "react-router-dom";
+import { useProductsContext } from "../../context/products_context";
 
 import styles from "./Sidebar.scss";
 import { FaTimes } from "react-icons/fa";
 
 const Sidebar = () => {
+
   const isOpen = true;
   return (
     <SidebarContainer>
