@@ -1,16 +1,34 @@
 import React from "react";
 import styled from "styled-components";
+import { FaTimes } from "react-icons/fa";
+import { react, switchCase } from "@babel/types";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
 import logo from "../../assets/logo.svg";
 import { links } from "../../utils/constants";
-import { Link } from "react-router-dom";
-import { useProductsContext } from "../../context/products_context";
-
 import styles from "./Sidebar.scss";
-import { FaTimes } from "react-icons/fa";
+
+import { RootState } from "../../store";
+import { openSidebar, closeSidebar } from "../../reducers/sidebar_reducer";
+import { SIDEBAR_OPEN, SIDEBAR_CLOSE } from "../../actions";
+import CartButton from "../cart-button";
 
 const Sidebar = () => {
+  const isOpen = useSelector((state: RootState) => state.sidebarReducer);
+  const dispatch = useDispatch();
 
-  const isOpen = true;
+  const handleChange = (action: string) => {
+    switch (action) {
+      case SIDEBAR_OPEN:
+        return dispatch(openSidebar());
+      case SIDEBAR_CLOSE:
+        return dispatch(closeSidebar());
+      default:
+        return false;
+    }
+  };
+
   return (
     <SidebarContainer>
       <aside className={isOpen ? "sidebar show-sidebar" : "show-sidebar"}>
@@ -32,6 +50,7 @@ const Sidebar = () => {
             <Link to='/checkout'>Checkout</Link>
           </li>
         </ul>
+        <CartButton />
       </aside>
     </SidebarContainer>
   );

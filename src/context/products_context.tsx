@@ -1,7 +1,13 @@
-import axios from 'axios'
-import React, { useContext, useEffect, useReducer, createContext, ReactNode } from 'react'
-import reducer from '../reducers/products_reducer'
-import { products_url as url } from '../utils/constants'
+import axios from "axios";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  createContext,
+  ReactNode,
+} from "react";
+import reducer from "../reducers/products_reducer";
+import { products_url as url } from "../utils/constants";
 import {
   SIDEBAR_OPEN,
   SIDEBAR_CLOSE,
@@ -11,37 +17,36 @@ import {
   GET_SINGLE_PRODUCT_BEGIN,
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
-} from '../actions'
-import {SidebarActions, SidebarState} from '../utils/interfaces'
-import { isNullishCoalesce } from 'typescript'
+} from "../actions";
+import { SidebarActions, SidebarState } from "../utils/interfaces";
+import { isNullishCoalesce } from "typescript";
 
 interface Props {
-  children?: ReactNode
+  children?: ReactNode;
   // any props that come into the component
 }
 
+const initialState = { isOpen: false };
 
-const initialState = {isOpen: false}
+const ProductsContext = createContext<{}>({});
 
-const ProductsContext = createContext<{}>({})
-
-export const ProductsProvider : React.FC<Props> = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+export const ProductsProvider: React.FC<Props> = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
   const openSidebar = () => {
-    dispatch({type: SIDEBAR_OPEN, payload: 1})
-  }
+    dispatch({ type: SIDEBAR_OPEN, payload: 1 });
+  };
 
   const closeSidebar = () => {
-    dispatch({type: SIDEBAR_CLOSE, payload: 1})
-  }
+    dispatch({ type: SIDEBAR_CLOSE, payload: 1 });
+  };
 
   return (
-    <ProductsContext.Provider value={{...state, dispatch}}>
+    <ProductsContext.Provider value={{ ...state, openSidebar, closeSidebar }}>
       {children}
     </ProductsContext.Provider>
-  )
-}
+  );
+};
 // make sure use
 export const useProductsContext = () => {
-  return useContext(ProductsContext)
-}
+  return useContext(ProductsContext);
+};
